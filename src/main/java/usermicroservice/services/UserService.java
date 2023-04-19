@@ -3,7 +3,10 @@ package usermicroservice.services;
 import usermicroservice.models.User;
 import usermicroservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,31 +21,32 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUserById (String email){
-        return  userRepository.findById(email).get();
+    public Optional<User> findUserById (String email){
+        return  userRepository.findById(email);
     }
 
     public User createUser (User user){
         return userRepository.save(user);
     }
 
-    public User updateUser (User user, String email){
-        User userToUpdate =  userRepository.findById(email).get();
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setName(user.getName());
-        userToUpdate.setLastName(user.getLastName());
-        userToUpdate.setCity(user.getCity());
-        userToUpdate.setPaymentMethod(user.getPaymentMethod());
-        userToUpdate.setFidelityPoints(user.getFidelityPoints());
-        userToUpdate.setPurchasePriceAverage(user.getPurchasePriceAverage());
+    public Optional <User> updateUser (User user, String email){
+        return userRepository.findById(email)
+            .map(newUser ->{
+                newUser.setEmail(user.getEmail());
+                newUser.setName(user.getName());
+                newUser.setLastName(user.getLastName());
+                newUser.setCity(user.getCity());
+                newUser.setPaymentMethod(user.getPaymentMethod());
+                newUser.setFidelityPoints(user.getFidelityPoints());
+                newUser.setPurchasePriceAverage(user.getPurchasePriceAverage());
 
-        return userRepository.save(user);
+                return userRepository.save(newUser);
+
+            });
+
     }
 
-    public User deleteUser (String email){
-        User userToDelete = userRepository.findById(email).get();
+    public void deleteUser (String email){
         userRepository.deleteById(email);
-
-        return  userToDelete;
     }
 }

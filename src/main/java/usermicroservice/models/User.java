@@ -45,7 +45,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String id) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -69,7 +69,7 @@ public class User {
         return city;
     }
 
-    public void setCity(String address) {
+    public void setCity(String city) {
         this.city = city;
     }
 

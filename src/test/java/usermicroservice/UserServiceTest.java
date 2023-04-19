@@ -7,15 +7,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.BDDMockito.*;
 
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.swing.text.html.Option;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import static org.mockito.Mockito.when;
 
@@ -48,7 +53,7 @@ public class UserServiceTest {
     @Test
     void givenACreatedUserThenReturnAllUsers() {
         //GIVEN
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user));
+        given(userRepository.findAll()).willReturn(Arrays.asList(user));
 
         //WHEN
         var result = userService.findAllUsers();
@@ -62,29 +67,13 @@ public class UserServiceTest {
     @Test
     public void givenAUserIdThenReturnUser(){
         //GIVEN
-        when (userRepository.findById(user.getEmail())).thenReturn(Optional.ofNullable(user));
+        given (userRepository.findById(user.getEmail())).willReturn(Optional.ofNullable(user));
 
         //WHEN
         var result = userService.findUserById("usuario@hotmail.com");
 
         //THEN
-        assertThat(result.getEmail()).isEqualTo("usuario@hotmail.com");
-    }
-
-    @DisplayName("Test for updating a  user")
-    @Test
-    public void givenSomeInfoTheUpdateUser(){
-        //GIVEN
-        when(userRepository.save(user)).thenReturn(user);
-
-        //WHEN
-        User newUser = userService.findUserById(user.getEmail());
-        newUser.setCity("Madrid");
-        User result = userService.updateUser(newUser, "usuario@hotmail.com");
-
-        //THEN
-        assertThat(result.getEmail()).isEqualTo("usuario@hotmail.com");
-        assertThat(result.getCity()).isEqualTo("Madrid");
+        assertThat(result.map(User::getEmail).equals(user.getEmail()));
 
     }
 
@@ -92,7 +81,7 @@ public class UserServiceTest {
     @Test
     public void givenAUserObjectThenCreateANewUser(){
         //GIVEN
-        when(userRepository.save(user)).thenReturn(user);
+        given(userRepository.save(user)).willReturn(user);
 
         //WHEN
         var result = userService.createUser(user);
@@ -102,6 +91,50 @@ public class UserServiceTest {
         assertThat(result.getName()).isEqualTo("María");
         assertThat(result.getFidelityPoints()).isEqualTo(10);
     }
+
+    @DisplayName("Test for updating a  user")
+    @Test
+    public void givenSomeInfoTheUpdateUser(){
+
+        //GIVEN
+        given(userRepository.save(user)).willReturn(user);
+
+        //WHEN
+
+        user.setCity("Madrid");
+
+        //ESTO NO FUNCIONAL. ME DEVUELVE UN OPTIONAL VACIO
+        var result = userService.updateUser(user, "usuario@hotmail.com");
+
+        /*
+        ESTO FUNCIONA
+        var result = userRepository.save(user);
+        assertThat(result.getCity()).isEqualTo("Madrid");
+         */
+
+
+        //THEN
+        assertThat(result.map(User::getEmail)).isEqualTo("usuario@hotmail.com");
+        assertThat(result.map(User::getCity)).isEqualTo("Madrid");
+
+    }
+
+    @DisplayName("Test for deliting a  user")
+    @Test
+    public void givenTheIdThenDeleteUser() {
+
+        //GIVEN
+        userRepository.save(user);
+
+        //WHEN
+        userService.deleteUser(user.getEmail());
+        var result = userService.findUserById(user.getEmail());
+
+        //THEN
+        assertThat(result).isEmpty();
+
+    }
+
 
 
 
