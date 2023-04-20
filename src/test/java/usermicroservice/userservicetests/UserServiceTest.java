@@ -1,4 +1,4 @@
-package usermicroservice.UserServiceTest;
+package usermicroservice.userservicetests;
 
 import usermicroservice.models.User;
 import usermicroservice.repositories.UserRepository;
@@ -89,7 +89,6 @@ public class UserServiceTest {
 
         //WHEN
         var result = userService.updateUser(newUpdatedUser);
-
 
         //THEN
         assertThat(result.get().getEmail()).isEqualTo("laura@gmail.com");
