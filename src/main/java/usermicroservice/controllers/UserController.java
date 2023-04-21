@@ -46,9 +46,18 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("/api/users/{email}")
+    public ResponseEntity<User> updatingUser (@RequestBody User user) {
+        try {
+            return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @DeleteMapping ("/api/users/{email}")
     public void deletingUser(@PathVariable String email) {
         userService.deleteUser(email);
     }
-
 }

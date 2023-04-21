@@ -19,35 +19,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById (String email){
-        return  userRepository.findById(email);
+    public Optional<User> findUserById(String email) {
+        return userRepository.findById(email);
     }
 
-    public User createUser (User user){
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
-    public Optional <User> updateUser (User user){
-        return userRepository.findById(user.getEmail())
-            .map(changedUser ->{
-                changedUser.setEmail(user.getEmail());
-                changedUser.setName(user.getName());
-                changedUser.setLastName(user.getLastName());
-                changedUser.setCity(user.getCity());
-                changedUser.setPaymentMethod(user.getPaymentMethod());
-                changedUser.setFidelityPoints(user.getFidelityPoints());
-                changedUser.setPurchasePriceAverage(user.getPurchasePriceAverage());
-
-                return userRepository.save(changedUser);
-
-            });
-
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
-    public void deleteUser (String email){
+
+    public void deleteUser(String email) {
         userRepository.deleteById(email);
     }
 
-    public List<User> findUserByName (String name) {
+    public List<User> findUserByName(String name) {
         return userRepository.findByName(name);
     }
 

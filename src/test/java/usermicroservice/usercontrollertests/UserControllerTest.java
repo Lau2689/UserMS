@@ -86,8 +86,8 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(getMockedUser("laura@gmail.com"))));
         //THEN/
-        response.andDo(print())
-                .andExpect(status().isCreated())
+        response.andExpect(status().isCreated())
+                .andDo(print())
                 .andExpect(jsonPath("$.email", is(getMockedUser("laura@gmail.com").getEmail())))
                 .andExpect(jsonPath("$.name", is(getMockedUser("laura@gmail.com").getName())))
                 .andExpect(jsonPath("$.lastName", is(getMockedUser("laura@gmail.com").getLastName())))
@@ -97,7 +97,30 @@ public class UserControllerTest {
     }
 
     @Test
-    void givenAnIdAndModifyingSomeUserInfoThenOk(){
+    void givenAnIdAndModifyingSomeUserInfoThenOk() throws Exception {
+        //no funciona!!!Cambiar
+
+        //GIVEN
+        User databaseStoredUser = getMockedUser("laura@gmail.com");
+        databaseStoredUser.setLastName("Galindo");
+        given(userService.findUserById("laura@gmail.com")).willReturn(Optional.ofNullable(databaseStoredUser));
+        given(userService.updateUser(databaseStoredUser)).willReturn(databaseStoredUser);
+
+       //userService.updateUser(databaseStoredUser);
+
+        //WHEN
+        ResultActions response = mockMvc.perform(put("/api/users/{email}",databaseStoredUser.getEmail())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(databaseStoredUser)));
+
+        //THEN
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.email", is(databaseStoredUser.getEmail())))
+                .andExpect(jsonPath("$.name", is(databaseStoredUser.getName())))
+                .andExpect(jsonPath("$.lastName", is(databaseStoredUser.getLastName())));
+
+
 
     }
     @Test
@@ -114,11 +137,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.email").doesNotExist());
 
     }
-
-    //GIVEN
-    //WHEN
-    //THEN/
-
 
     private User getMockedUser(String email){
         return User.builder()
