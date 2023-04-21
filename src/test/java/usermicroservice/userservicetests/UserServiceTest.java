@@ -73,6 +73,7 @@ public class UserServiceTest {
         //THEN
         assertThat(result.getEmail()).isEqualTo("laura@gmail.com");
         assertThat(result.getName()).isEqualTo("Laura");
+        assertThat(result.getLastName()).isEqualTo("García");
         assertThat(result.getFidelityPoints()).isNull();
     }
 

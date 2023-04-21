@@ -1,12 +1,10 @@
 package usermicroservice.controllers;
 
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,4 +36,19 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping("/api/users")
+    public ResponseEntity<User> creatingUser (@RequestBody User user ) {
+        try {
+            return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @DeleteMapping ("/api/users/{email}")
+    public void deletingUser(@PathVariable String email) {
+        userService.deleteUser(email);
+    }
+
 }

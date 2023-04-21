@@ -17,21 +17,19 @@ import usermicroservice.controllers.UserController;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.mockito.ArgumentMatcher.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.web.servlet.function.RequestPredicates.contentType;
 
 @WebMvcTest
 @ExtendWith(MockitoExtension.class)
@@ -42,16 +40,9 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private UserService userService;
-
-    private UserController userController;
-
     @Autowired
     private ObjectMapper objectMapper;
 
-
-    void setup(){
-        userController = new UserController(userService);
-    }
 
     @Test
     void whenIsNotEmptyThenOk() throws Exception {
@@ -95,14 +86,33 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(getMockedUser("laura@gmail.com"))));
         //THEN/
-        response.andExpect(status().isCreated())
-                .andDo(print())
+        response.andDo(print())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email", is(getMockedUser("laura@gmail.com").getEmail())))
                 .andExpect(jsonPath("$.name", is(getMockedUser("laura@gmail.com").getName())))
-                .andExpect(jsonPath("$.lastname", is(getMockedUser("laura@gmail.com").getLastName())))
+                .andExpect(jsonPath("$.lastName", is(getMockedUser("laura@gmail.com").getLastName())))
                 .andExpect(jsonPath("$.city", is(getMockedUser("laura@gmail.com").getCity())))
-                .andExpect(jsonPath("$.paymentmethod", is(getMockedUser("laura@gmail.com").getPaymentMethod()))
-                );
+                .andExpect(jsonPath("$.paymentMethod", is(getMockedUser("laura@gmail.com").getPaymentMethod())));
+
+    }
+
+    @Test
+    void givenAnIdAndModifyingSomeUserInfoThenOk(){
+
+    }
+    @Test
+    void givenAUserIdForDeletingUserThenOk() throws Exception {
+        //GIVEN
+        userService.deleteUser(getMockedUser("laura@gmail.com").getEmail());
+
+        //WHEN
+        ResultActions response = mockMvc.perform(delete("/api/users/email", getMockedUser("laura@gmail.com")));
+
+        //THEN/
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.email").doesNotExist());
+
     }
 
     //GIVEN
@@ -114,7 +124,7 @@ public class UserControllerTest {
         return User.builder()
                 .email(email)
                 .name("Laura")
-                .lastName("García")
+                .lastName("Garcia")
                 .city("Asturias")
                 .paymentMethod("Paypal")
                 .build();
