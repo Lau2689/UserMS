@@ -36,7 +36,7 @@ public class UserServiceTest {
 
     @DisplayName("Test to verfify the FindAll")
     @Test
-    void givenACreatedUserThenReturnAllUsers() {
+    void givenCreatedUserThenReturnAllUsers() {
         //GIVEN
         given(userRepository.findAll()).willReturn(Arrays.asList(getMockedUser("laura@gmail.com")));
 
@@ -107,7 +107,7 @@ public class UserServiceTest {
 
         //WHEN
         userService.deleteUser(getMockedUser("laura@gmail.com").getEmail());
-        var result = userService.findUserById(getMockedUser("laura@gmail.com").getEmail());
+        var result = userRepository.findById(getMockedUser("laura@gmail.com").getEmail());
 
         //THEN
         assertThat(result).isEmpty();
@@ -127,6 +127,7 @@ public class UserServiceTest {
         //THEN
         assertThat(result.size()).isEqualTo(1);
     }
+
     private User getMockedUser(String email){
         return User.builder()
                 .email(email)

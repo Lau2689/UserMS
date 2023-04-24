@@ -2,6 +2,7 @@ package usermicroservice.usercontrollertests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -39,7 +40,6 @@ public class UserControllerTest {
     private UserService userService;
     @Autowired
     private ObjectMapper objectMapper;
-
 
     @Test
     void whenIsNotEmptyThenOk() throws Exception {
@@ -89,7 +89,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.lastName", is(getMockedUser("laura@gmail.com").getLastName())))
                 .andExpect(jsonPath("$.city", is(getMockedUser("laura@gmail.com").getCity())))
                 .andExpect(jsonPath("$.paymentMethod", is(getMockedUser("laura@gmail.com").getPaymentMethod())));
-
     }
 
     @Test
@@ -112,6 +111,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name", is(databaseStoredUser.getName())))
                 .andExpect(jsonPath("$.lastName", is(databaseStoredUser.getLastName())));
     }
+
     @Test
     void givenAUserIdForDeletingUserThenOk() throws Exception {
         //GIVEN
@@ -143,6 +143,7 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",is(usersWithSameName.size())));
     }
+
 
     private User getMockedUser(String email){
         return User.builder()
