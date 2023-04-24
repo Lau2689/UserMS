@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 @Builder
 @Entity

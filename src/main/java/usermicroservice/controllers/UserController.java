@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/api/users")
-    ResponseEntity<List<User>> gettingAllUsers (){
+     public ResponseEntity<List<User>> gettingAllUsers (){
         try {
             return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
         }catch (Exception e){
@@ -27,8 +27,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/api/users/{email}")
-    ResponseEntity<Optional<User>> gettingUserById(@PathVariable String email) {
+    @GetMapping(value = "/api/users/{email}")
+    public ResponseEntity<Optional<User>> gettingUserById(@PathVariable String email) {
         try {
             Optional<User> user = userService.findUserById(email);
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -59,5 +59,14 @@ public class UserController {
     @DeleteMapping ("/api/users/{email}")
     public void deletingUser(@PathVariable String email) {
         userService.deleteUser(email);
+    }
+
+    @GetMapping("/api/users/usersbyname/{name}")
+    public ResponseEntity<List<User>> findingUserByName (@PathVariable ("name") String name) {
+        try {
+            return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
+        } catch (Exception e) {
+            return  ResponseEntity.notFound().build();
+        }
     }
 }

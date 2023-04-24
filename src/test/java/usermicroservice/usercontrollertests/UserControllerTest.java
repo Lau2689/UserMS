@@ -22,10 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.BDDMockito.given;
-
-import static org.mockito.ArgumentMatcher.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -58,7 +55,6 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",is(allUsers.size())));
-
     }
 
     @Test
@@ -98,15 +94,11 @@ public class UserControllerTest {
 
     @Test
     void givenAnIdAndModifyingSomeUserInfoThenOk() throws Exception {
-        //no funciona!!!Cambiar
-
         //GIVEN
         User databaseStoredUser = getMockedUser("laura@gmail.com");
-        databaseStoredUser.setLastName("Galindo");
-        given(userService.findUserById("laura@gmail.com")).willReturn(Optional.ofNullable(databaseStoredUser));
-        given(userService.updateUser(databaseStoredUser)).willReturn(databaseStoredUser);
+        given(userService.updateUser(any())).willReturn(databaseStoredUser);
 
-       //userService.updateUser(databaseStoredUser);
+        databaseStoredUser.setLastName("Galindo");
 
         //WHEN
         ResultActions response = mockMvc.perform(put("/api/users/{email}",databaseStoredUser.getEmail())
@@ -119,9 +111,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.email", is(databaseStoredUser.getEmail())))
                 .andExpect(jsonPath("$.name", is(databaseStoredUser.getName())))
                 .andExpect(jsonPath("$.lastName", is(databaseStoredUser.getLastName())));
-
-
-
     }
     @Test
     void givenAUserIdForDeletingUserThenOk() throws Exception {
@@ -135,7 +124,24 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.email").doesNotExist());
+    }
 
+    @Test
+    void givenTheUserNameFindUserThenOk() throws Exception{
+        //GIVEN
+        List <User> usersWithSameName = new ArrayList<>();
+        usersWithSameName.add(getMockedUser("laura@gmail.com"));
+        given(userService.findUserByName("Laura")).willReturn(usersWithSameName);
+
+
+        //WHEN
+        ResultActions response = mockMvc.perform(get("/api/users/usersbyname/{name}",getMockedUser("laura@gmail.com").getName()));
+
+
+        //THEN
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()",is(usersWithSameName.size())));
     }
 
     private User getMockedUser(String email){
