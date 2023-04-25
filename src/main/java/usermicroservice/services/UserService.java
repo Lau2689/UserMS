@@ -28,6 +28,7 @@ public class UserService {
         }else {
             return allUsers;
         }
+
     }
 
     public Optional<User> findUserById(String email) {

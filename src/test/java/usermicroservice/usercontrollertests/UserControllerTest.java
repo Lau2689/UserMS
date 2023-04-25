@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import usermicroservice.controllers.UserController;
+import usermicroservice.exceptions.ExceptionHandler;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 
@@ -31,7 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 @WebMvcTest
 @ExtendWith(MockitoExtension.class)
-@ContextConfiguration(classes = {UserController.class})
+@ContextConfiguration(classes = {UserController.class, ExceptionHandler.class})
 public class UserControllerTest {
 
     @Autowired
@@ -142,6 +143,22 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",is(usersWithSameName.size())));
+    }
+
+    @DisplayName("Test to verfify  gettingAllUsers with Exception")
+    @Test
+    void whenIsEmptyThenNotFoundException() throws Exception {
+        //GIVEN
+        List<User> allUsers = new ArrayList<>();
+        given(userService.findAllUsers()).willReturn(allUsers);
+
+        //WHEN
+        ResultActions response = mockMvc.perform(get("/api/users"));
+
+
+        //THEN
+        response.andExpect(status().isNotFound())
+                .andDo(print());
     }
 
 
