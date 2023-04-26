@@ -2,7 +2,6 @@ package usermicroservice.usercontrollertests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -87,7 +86,7 @@ public class UserControllerTest {
         ResultActions response = mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(getMockedUser("laura@gmail.com"))));
-        //THEN/
+        //THEN
         response.andExpect(status().isCreated())
                 .andDo(print())
                 .andExpect(jsonPath("$.email", is(getMockedUser("laura@gmail.com").getEmail())))

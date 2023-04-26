@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 
@@ -19,7 +18,6 @@ public class User {
 
     @Id
     @NotNull
-    //@Email(message = "Email is not valid", regexp = "^[[^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotBlank
     private String email;
     @NotNull

@@ -1,6 +1,4 @@
 package usermicroservice.controllers;
-
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
