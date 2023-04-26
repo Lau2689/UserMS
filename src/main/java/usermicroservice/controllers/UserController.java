@@ -14,46 +14,30 @@ public class UserController {
 
     private UserService userService;
 
+
     public UserController (UserService userService){
         this.userService = userService;
     }
 
     @GetMapping("/api/users")
      public ResponseEntity<List<User>> gettingAllUsers (){
-        try {
-            return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/api/users/{email}")
+    @GetMapping("/api/users/{email}")
     public ResponseEntity<Optional<User>> gettingUserById(@PathVariable String email) {
-        try {
-            Optional<User> user = userService.findUserById(email);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        return new ResponseEntity<>(userService.findUserById(email), HttpStatus.OK);
     }
 
 
     @PostMapping("/api/users")
     public ResponseEntity<User> creatingUser (@RequestBody User user ) {
-        try {
-            return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
-        }catch(Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/api/users/{email}")
     public ResponseEntity<User> updatingUser (@RequestBody User user) {
-        try {
-            return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping ("/api/users/{email}")
@@ -63,10 +47,6 @@ public class UserController {
 
     @GetMapping("/api/users/usersbyname/{name}")
     public ResponseEntity<List<User>> findingUserByName (@PathVariable ("name") String name) {
-        try {
             return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
-        } catch (Exception e) {
-            return  ResponseEntity.notFound().build();
-        }
     }
 }

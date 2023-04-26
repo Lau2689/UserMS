@@ -180,7 +180,7 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userRepository.save().hasCause(badArgumentsException);
     }*/
 
-    @DisplayName("Testin findUserByName Exception ")
+    @DisplayName("Testing findUserByName Exception ")
     @Test
     public void givenANonExistingNameThenReturnNotFoundExceptionr() {
         //GIVEN

@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import usermicroservice.controllers.UserController;
 import usermicroservice.exceptions.ExceptionHandler;
+import usermicroservice.exceptions.ResourceNotFoundException;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 
@@ -42,6 +44,8 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    @DisplayName("Test to verfify  gettingAllUsers")
     @Test
     void whenIsNotEmptyThenOk() throws Exception {
         //GIVEN
@@ -58,6 +62,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.size()",is(allUsers.size())));
     }
 
+    @DisplayName("Test to verfify  gettingUserById")
     @Test
     void whenAnExistingIdIsProvidingThenOk() throws Exception {
         //GIVEN
@@ -74,7 +79,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void whenNecessaryParametersAreGivenForCreatingAUserThenOk() throws Exception {
+    void whenNecessaryParametersAreGivenForCreatingAUserAndUserDoesntExistThenOk() throws Exception {
         //GIVEN
         given(userService.createUser(any())).willReturn(getMockedUser("laura@gmail.com"));
 
@@ -144,23 +149,6 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",is(usersWithSameName.size())));
     }
-
-    @DisplayName("Test to verfify  gettingAllUsers with Exception")
-    @Test
-    void whenIsEmptyThenNotFoundException() throws Exception {
-        //GIVEN
-        List<User> allUsers = new ArrayList<>();
-        given(userService.findAllUsers()).willReturn(allUsers);
-
-        //WHEN
-        ResultActions response = mockMvc.perform(get("/api/users"));
-
-
-        //THEN
-        response.andExpect(status().isNotFound())
-                .andDo(print());
-    }
-
 
     private User getMockedUser(String email){
         return User.builder()
