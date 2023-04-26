@@ -20,19 +20,19 @@ public class User {
     @Id
     @NotNull
     //@Email(message = "Email is not valid", regexp = "^[[^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
-    @NotBlank(message = "Email is mandatory")
+    @NotBlank
     private String email;
     @NotNull
-    @NotBlank(message = "Name is mandatory")
+    @NotBlank
     private String name;
     @NotNull
-    @NotBlank(message = "Lastname is mandatory")
+    @NotBlank
     private String lastName;
     @NotNull
-    @NotBlank(message = "City is mandatory")
+    @NotBlank
     private String city;
     @NotNull
-    @NotBlank(message = "PaymentMethod is mandatory")
+    @NotBlank
     private String paymentMethod;
 
     private Integer fidelityPoints;
