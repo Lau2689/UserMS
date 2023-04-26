@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import usermicroservice.controllers.UserController;
 import usermicroservice.exceptions.ExceptionHandler;
-import usermicroservice.exceptions.ResourceNotFoundException;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 
@@ -78,6 +76,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name",is(getMockedUser("laura@gmail.com").getName())));
     }
 
+    @DisplayName("Test to verfify  creatingUser")
     @Test
     void whenNecessaryParametersAreGivenForCreatingAUserAndUserDoesntExistThenOk() throws Exception {
         //GIVEN
@@ -97,6 +96,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.paymentMethod", is(getMockedUser("laura@gmail.com").getPaymentMethod())));
     }
 
+    @DisplayName("Test to verfify updatingUser")
     @Test
     void givenAnIdAndModifyingSomeUserInfoThenOk() throws Exception {
         //GIVEN
@@ -118,6 +118,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.lastName", is(databaseStoredUser.getLastName())));
     }
 
+    @DisplayName("Test to verfify  deletingUser")
     @Test
     void givenAUserIdForDeletingUserThenOk() throws Exception {
         //GIVEN
@@ -132,6 +133,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.email").doesNotExist());
     }
 
+    @DisplayName("Test to verfify  gettingUserByName")
     @Test
     void givenTheUserNameFindUserThenOk() throws Exception{
         //GIVEN

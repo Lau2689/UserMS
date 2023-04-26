@@ -2,7 +2,6 @@ package usermicroservice.services;
 
 
 import usermicroservice.exceptions.BadArgumentsException;
-import usermicroservice.exceptions.ExceptionHandler;
 import usermicroservice.exceptions.ResourceNotFoundException;
 import usermicroservice.models.User;
 import usermicroservice.repositories.UserRepository;
