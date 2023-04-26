@@ -182,20 +182,21 @@ public class UserServiceTest {
 
     }
     //CORREGIR
-   /* @DisplayName("Testing createUser with invalid Email format Exception")
+    @DisplayName("Testing createUser with invalid Email format Exception")
     @Test
     public void givenAnInvalidEmailFormatThenReturnBadArgumentsException() {
         //GIVEN
-        given (userRepository.save(any())).willReturn(Optional.ofNullable(getMockedUser2("nuriacom")));
+        String userEmail ="nuriacom";
+        given (userRepository.findById(userEmail)).willReturn(Optional.empty());
 
         //WHEN
-        User user= getMockedUser2("nuriacom");
+        var result = getMockedUser2(userEmail);
 
         //THEN
 
-        assertThatThrownBy(() -> userService.createUser(user)).hasCause(badArgumentsException);
+        assertThatThrownBy(() -> userService.createUser(result)).hasCause(badArgumentsException);
 
-    }*/
+    }
 
     @DisplayName("Testing updateUser Exception ")
     @Test
