@@ -48,7 +48,11 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        return userRepository.save(user);
+        Optional <User> userToUpdate = userRepository.findById(user.getEmail());
+        if(userToUpdate.isPresent()){
+            return userRepository.save(user);
+        }
+        throw new ResourceNotFoundException("User not found");
     }
 
     public void deleteUser(String email) {

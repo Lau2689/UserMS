@@ -179,7 +179,19 @@ public class UserServiceTest {
         //THEN
         assertThatThrownBy(() -> userRepository.save().hasCause(badArgumentsException);
     }*/
+    @DisplayName("Testin updateUser Exception ")
+    @Test
+    public void givenANotExistingUserThenReturnNotFoundExceptionr() {
+        //GIVEN
+        User userToUpdate = new User();
+        given (userRepository.findById("laura@hotmail.com")).willReturn(Optional.of(userToUpdate));
 
+        //WHEN
+         userToUpdate.getEmail();
+
+        //THEN
+        assertThatThrownBy(() -> userService.updateUser(userToUpdate)).hasCause(resourceNotFoundException);
+    }
     @DisplayName("Testing findUserByName Exception ")
     @Test
     public void givenANonExistingNameThenReturnNotFoundExceptionr() {
