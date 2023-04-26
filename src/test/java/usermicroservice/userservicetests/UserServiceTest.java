@@ -104,7 +104,7 @@ public class UserServiceTest {
 
     }
 
-    @DisplayName("Test for deliting a  user")
+    @DisplayName("Test for deleting a  user")
     @Test
     public void givenTheIdThenDeleteUser() {
 
@@ -149,7 +149,7 @@ public class UserServiceTest {
         //THEN
         assertThatThrownBy(() -> userService.findAllUsers()).hasCause(resourceNotFoundException);
     }
-    @DisplayName("Testin findUserById Exception ")
+    @DisplayName("Testing findUserById Exception ")
     @Test
     public void givenAnInvalidUserIdThenReturnNotFoundExceptionr() {
         //GIVEN
@@ -163,23 +163,25 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userService.findUserById(userId)).hasCause(resourceNotFoundException);
     }
 
-    //MIRARLO BIEN!!! MIRAR BIEN EL SERVICE
-    /*@DisplayName("Testing createUser Exception")
+    
+    @DisplayName("Testing createUser Exception")
     @Test
     public void givenAnExistingUserThenReturnBadArgumentsException() {
         //GIVEN
 
-        User existingUser = userService.createUser(getMockedUser("laura@gmail.com"));
+        User existingUser = getMockedUser("laura@gmail.com");
         given (userRepository.findById("laura@gmail.com")).willReturn(Optional.ofNullable(existingUser));
 
         //WHEN
         User user= getMockedUser2("laura@gmail.com");
 
-
         //THEN
-        assertThatThrownBy(() -> userRepository.save().hasCause(badArgumentsException);
-    }*/
-    @DisplayName("Testin updateUser Exception ")
+        if (existingUser.getEmail().equals(user.getEmail())) {
+            assertThatThrownBy(() -> userService.createUser(user)).hasCause(badArgumentsException);
+        }
+
+    }
+    @DisplayName("Testing updateUser Exception ")
     @Test
     public void givenANotExistingUserThenReturnNotFoundExceptionr() {
         //GIVEN
@@ -220,7 +222,7 @@ public class UserServiceTest {
     private User getMockedUser2(String email){
         return User.builder()
                 .email(email)
-                .name("Laura")
+                .name("Nuria")
                 .lastName("García")
                 .city("Asturias")
                 .paymentMethod("Paypal")
