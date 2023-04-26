@@ -163,8 +163,8 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userService.findUserById(userId)).hasCause(resourceNotFoundException);
     }
 
-    
-    @DisplayName("Testing createUser Exception")
+
+    @DisplayName("Testing createUser that exists Exception")
     @Test
     public void givenAnExistingUserThenReturnBadArgumentsException() {
         //GIVEN
@@ -181,6 +181,22 @@ public class UserServiceTest {
         }
 
     }
+    //CORREGIR
+   /* @DisplayName("Testing createUser with invalid Email format Exception")
+    @Test
+    public void givenAnInvalidEmailFormatThenReturnBadArgumentsException() {
+        //GIVEN
+        given (userRepository.save(any())).willReturn(Optional.ofNullable(getMockedUser2("nuriacom")));
+
+        //WHEN
+        User user= getMockedUser2("nuriacom");
+
+        //THEN
+
+        assertThatThrownBy(() -> userService.createUser(user)).hasCause(badArgumentsException);
+
+    }*/
+
     @DisplayName("Testing updateUser Exception ")
     @Test
     public void givenANotExistingUserThenReturnNotFoundExceptionr() {

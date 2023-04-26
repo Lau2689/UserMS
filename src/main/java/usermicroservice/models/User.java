@@ -3,10 +3,14 @@ package usermicroservice.models;
 import com.sun.istack.NotNull;
 import lombok.*;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Optional;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 
 @Builder
 @Entity
@@ -15,14 +19,20 @@ public class User {
 
     @Id
     @NotNull
+    //@Email(message = "Email is not valid", regexp = "^[[^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotBlank(message = "Email is mandatory")
     private String email;
     @NotNull
+    @NotBlank(message = "Name is mandatory")
     private String name;
     @NotNull
+    @NotBlank(message = "Lastname is mandatory")
     private String lastName;
     @NotNull
+    @NotBlank(message = "City is mandatory")
     private String city;
     @NotNull
+    @NotBlank(message = "PaymentMethod is mandatory")
     private String paymentMethod;
 
     private Integer fidelityPoints;

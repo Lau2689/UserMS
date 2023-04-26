@@ -2,6 +2,7 @@ package usermicroservice.usercontrollertests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -152,10 +153,37 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.size()",is(usersWithSameName.size())));
     }
 
+    @DisplayName("Test to verify creatingUser with Exception for invalid fields")
+    @Test
+    void givenInvalidFieldsThenReturnBadArgumentException() throws Exception{
+        //GIVEN
+        given(userService.createUser(any())).willReturn(getMockedUser("nuria@gmail.com"));
+
+        //WHEN
+        ResultActions response = mockMvc.perform(post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(getMockedUserInvalidArguments("nuria@gmail.com"))));
+        //THEN/
+        response.andExpect(status().isBadRequest())
+                .andDo(print());
+
+
+
+    }
+
     private User getMockedUser(String email){
         return User.builder()
                 .email(email)
                 .name("Laura")
+                .lastName("Garcia")
+                .city("Asturias")
+                .paymentMethod("Paypal")
+                .build();
+    }
+    private User getMockedUserInvalidArguments(String email){
+        return User.builder()
+                .email(email)
+                .name("")
                 .lastName("Garcia")
                 .city("Asturias")
                 .paymentMethod("Paypal")

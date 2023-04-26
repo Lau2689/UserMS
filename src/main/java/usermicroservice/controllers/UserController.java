@@ -1,11 +1,14 @@
 package usermicroservice.controllers;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import usermicroservice.models.User;
 import usermicroservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +34,13 @@ public class UserController {
 
 
     @PostMapping("/api/users")
-    public ResponseEntity<User> creatingUser (@RequestBody User user ) {
+    public ResponseEntity<User> creatingUser (@Valid @RequestBody User user ) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/api/users/{email}")
     public ResponseEntity<User> updatingUser (@RequestBody User user) {
-        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+       return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping ("/api/users/{email}")

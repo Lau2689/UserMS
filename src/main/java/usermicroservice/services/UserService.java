@@ -6,6 +6,7 @@ import usermicroservice.exceptions.ResourceNotFoundException;
 import usermicroservice.models.User;
 import usermicroservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import usermicroservice.validations.EmailValidation;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+
 
 
     public UserService(UserRepository userRepository) {
@@ -43,6 +45,8 @@ public class UserService {
         Optional <User> newUSer = userRepository.findById(user.getEmail());
         if(newUSer.isPresent()){
             throw new BadArgumentsException("The user already exists");
+        }else if(EmailValidation.isEmail(user.getEmail())== false){
+            throw new BadArgumentsException("Invalid email");
         }
         return userRepository.save(user);
     }
@@ -67,5 +71,4 @@ public class UserService {
             return userSearchedByName;
         }
     }
-
 }
