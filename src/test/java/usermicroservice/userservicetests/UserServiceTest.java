@@ -89,18 +89,19 @@ public class UserServiceTest {
 
         //GIVEN
         User databaseStoredUser = getMockedUser("laura@gmail.com");
-        given(userRepository.save(any())).willReturn(databaseStoredUser);
+        given (userRepository.findById("laura@gmail.com")).willReturn(Optional.ofNullable(databaseStoredUser));
 
 
         //WHEN
         databaseStoredUser.setCity("Madrid");
-        var result = userService.updateUser(databaseStoredUser);
+        userService.updateUser(databaseStoredUser);
+        var result = userService.findUserById(databaseStoredUser.getEmail());
 
         //THEN
-        assertThat(result.getEmail()).isEqualTo("laura@gmail.com");
-        assertThat(result.getCity()).isEqualTo("Madrid");
-        assertThat(result.getName()).isEqualTo("Laura");
-        assertThat(result.getPaymentMethod()).isNotNull();
+        assertThat(result.get().getEmail()).isEqualTo("laura@gmail.com");
+        assertThat(result.get().getCity()).isEqualTo("Madrid");
+        assertThat(result.get().getName()).isEqualTo("Laura");
+        assertThat(result.get().getPaymentMethod()).isNotNull();
 
     }
 

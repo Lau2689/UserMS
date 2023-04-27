@@ -53,10 +53,11 @@ public class UserService {
 
     public User updateUser(User user) {
         Optional <User> userToUpdate = userRepository.findById(user.getEmail());
-        if(userToUpdate.isPresent()){
+        if((userToUpdate.map(User::getEmail)).isPresent()){
             return userRepository.save(user);
+        }else {
+            throw new ResourceNotFoundException("Not possible to update because user doesn´t exist");
         }
-        throw new ResourceNotFoundException("User not found");
     }
 
     public void deleteUser(String email) {

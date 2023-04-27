@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 
 
 public class EmailValidationTest {
-
+    private final EmailValidation emailValidation = new EmailValidation();
     @DisplayName("Testing that email has valid format")
     @ParameterizedTest
     @MethodSource("givenAValidEmailFormatShouldReturnTrue")
     void checkingEmail (String emailInput,boolean expected){
-        boolean result = EmailValidation.isEmail(emailInput);
+        boolean result = emailValidation.isEmail(emailInput);
         assertEquals(expected,result);
     }
     private static Stream<Arguments> givenAValidEmailFormatShouldReturnTrue(){

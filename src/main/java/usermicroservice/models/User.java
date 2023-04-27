@@ -36,6 +36,9 @@ public class User {
     private Integer fidelityPoints;
 
     private Double purchasePriceAverage;
+    private Product favoriteproduct;
+    private Cart carts;
+
 
     public User() {}
 
