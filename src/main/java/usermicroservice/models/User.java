@@ -34,10 +34,9 @@ public class User {
     private String paymentMethod;
 
     private Integer fidelityPoints;
-
     private Double purchasePriceAverage;
     private Product favoriteproduct;
-    private Cart carts;
+
 
 
     public User() {}
