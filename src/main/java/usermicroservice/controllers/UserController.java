@@ -1,6 +1,7 @@
 package usermicroservice.controllers;
 import org.springframework.web.bind.annotation.*;
 import usermicroservice.models.User;
+import usermicroservice.models.UserFavoriteProducts;
 import usermicroservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +10,12 @@ import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class UserController {
 
     private UserService userService;
-
 
     public UserController (UserService userService){
         this.userService = userService;
@@ -49,5 +50,10 @@ public class UserController {
     @GetMapping("/api/users/usersbyname/{name}")
     public ResponseEntity<List<User>> findingUserByName (@PathVariable ("name") String name) {
             return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
+    }
+
+   @PostMapping(path = "/api/users/{email}/favoriteproducts")
+    public ResponseEntity<Set<UserFavoriteProducts>>  favorites (@RequestBody int itemId){
+        return new ResponseEntity<>((), HttpStatus.OK);
     }
 }

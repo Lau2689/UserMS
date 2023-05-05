@@ -6,9 +6,11 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 @Builder
@@ -35,13 +37,14 @@ public class User {
 
     private Integer fidelityPoints;
     private Double purchasePriceAverage;
-    private Product favoriteproduct;
+    @OneToMany
+    private List<Integer> favoriteProducts;
 
 
+    public User() {
+    }
 
-    public User() {}
-
-    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage) {
+    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage, List<Integer> favoriteProducts) {
         this.email = email;
         this.name = name;
         this.lastName = lastName;
@@ -49,8 +52,8 @@ public class User {
         this.paymentMethod = paymentMethod;
         this.fidelityPoints = fidelityPoints;
         this.purchasePriceAverage = purchasePriceAverage;
+        this.favoriteProducts = favoriteProducts;
     }
-
 
     public String getEmail() {
         return email;
@@ -108,16 +111,26 @@ public class User {
         this.purchasePriceAverage = purchasePriceAverage;
     }
 
+    public List<Integer> getFavoriteProducts() {
+        return favoriteProducts;
+    }
+
+    public void setFavoriteProducts(List<Integer> favoriteProducts) {
+        this.favoriteProducts = favoriteProducts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "email=" + email +
+                "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", fidelityPoints=" + fidelityPoints +
                 ", purchasePriceAverage=" + purchasePriceAverage +
+                ", favoriteProducts=" + favoriteProducts +
                 '}';
     }
 }
+

@@ -42,7 +42,7 @@ public class UserServiceTest {
 
     @DisplayName("Test to verfify the FindAll")
     @Test
-    void givenCreatedUserThenReturnAllUsers() {
+    public void givenCreatedUserThenReturnAllUsers() {
         //GIVEN
         given(userRepository.findAll()).willReturn(Arrays.asList(getMockedUser("laura@gmail.com")));
 
@@ -135,11 +135,26 @@ public class UserServiceTest {
         assertThat(result.size()).isEqualTo(1);
     }
 
+    /*@DisplayName("Test for setting the favorite product")
+    @Test
+    public void givenSeveralProductsThenUserCanSetOneFavoriteProduct(){
+        //GIVEN
+        given (userRepository.findById("laura@hotmail.com")).willReturn(Optional.ofNullable(getMockedUser("laura@hotmail.com")));
+        given (userRepository.findByProductById(2)).willReturn(Optional.ofNullable(product));
+
+        //WHEN
+        var result = userService.setFavoriteProducto(2);
+
+        //THEN
+        assertThat((result.getItemId()).isEqualTo(2));
+
+    }*/
+
 
 
     @DisplayName("Testing findAllUsers Exception")
     @Test
-    void havingNoUserThenReturnNotFoundException() {
+    public void havingNoUserThenReturnNotFoundException() {
         //GIVEN
         List<User> allUsers = new ArrayList<>();
         given(userRepository.findAll()).willReturn(allUsers);

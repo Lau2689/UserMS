@@ -17,6 +17,7 @@ public class UserService {
 
 
 
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -66,10 +67,15 @@ public class UserService {
 
     public List<User> findUserByName(String name) {
         List<User> userSearchedByName = userRepository.findByName(name);
-        if(userSearchedByName.isEmpty()){
+        if (userSearchedByName.isEmpty()) {
             throw new ResourceNotFoundException("No users with name" + name);
-        }else{
+        } else {
             return userSearchedByName;
         }
+    }
+
+    public int settingFavoriteProduct (String email, int itemId ){
+        Optional <User> userChoossingItem= userRepository.findById(email);
+
     }
 }

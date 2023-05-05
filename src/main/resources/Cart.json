@@ -1,0 +1,36 @@
+{
+  "carts":
+  [
+    {
+      "cartId": 1,
+      "userId": 123,
+      "products":
+      [
+        {
+          "itemId": 1,
+          "name": "Product 1",
+          "description": "This is product 1",
+          "price": 10.99, "stock": 50 },
+        {
+          "itemId": 2,
+          "name": "Product 2",
+          "description": "This is product 2",
+          "price": 25.99, "stock": 25
+        }
+      ]
+    },
+    {
+      "cartId": 2,
+      "userId": 456,
+      "products":
+      [
+        { "itemId": 3,
+          "name": "Product 3",
+          "description": "This is product 3",
+          "price": 8.99,
+          "stock": 100
+        }
+      ]
+    }
+  ]
+}

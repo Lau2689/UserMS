@@ -1,0 +1,47 @@
+[
+  {
+    "itemId": 1,
+    "name": "Apple MacBook Pro",
+    "description": "A powerful laptop designed for professional use.",
+    "category": "Electronics",
+    "price": 1999.99,
+    "stock": 10
+  },
+
+  {
+    "itemId": 2,
+    "name": "Nike Air Max 270",
+    "description": "A stylish and comfortable sneaker with excellent cushioning.",
+    "category": "Shoes",
+    "price": 129.99,
+    "stock": 20
+  },
+
+  {
+    "itemId": 3,
+    "name": "Sony Alpha A7 III",
+    "description": "A high-performance mirrorless camera with advanced autofocus.",
+    "category": "Cameras",
+    "price": 2199.99,
+    "stock": 5
+  },
+
+  {
+    "itemId": 4,
+    "name": "Samsung Galaxy S21",
+    "description": "A flagship smartphone with a stunning display and fast performance.",
+    "category": "Phones",
+    "price": 999.99,
+    "stock": 15
+  },
+
+  {
+    "itemId": 5,
+    "name": "Cuisinart DFP-14BCNY",
+    "description": "A powerful food processor that can handle a variety of tasks.",
+    "category": "Kitchen Appliances",
+    "price": 229.99,
+    "stock": 8
+  }
+
+]

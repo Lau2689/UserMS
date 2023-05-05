@@ -5,7 +5,6 @@ public class FidelityPoints {
     public static  int calculatingFidelityPoints(Double cart){
         int fidelityPoints = 0;
 
-
         if (cart >= 20 && cart < 30){
             fidelityPoints += 1;
         }else if (cart >= 30 && cart < 50 ){
