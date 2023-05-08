@@ -1,27 +1,40 @@
 package usermicroservice.models;
 
+import com.sun.istack.NotNull;
 import lombok.Builder;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import javax.persistence.*;
 
 @Builder
 @Entity
 @Table(name = "usersfavoriteproducts")
 public class UserFavoriteProducts {
+
+
+    @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int iduserproduct;
+    @NotNull
     private String userEmail;
+    @NotNull
     private int productId;
-    @OneToMany(mappedBy = "users")
-    Set<User> users;
+
 
     public UserFavoriteProducts(){}
 
-    public UserFavoriteProducts(String userEmail, int productId, Set<User> users) {
+    public UserFavoriteProducts(int iduserproduct, String userEmail, int productId) {
+        this.iduserproduct = iduserproduct;
         this.userEmail = userEmail;
         this.productId = productId;
-        this.users = users;
+    }
+
+    public int getIduserproduct() {
+        return iduserproduct;
+    }
+
+    public void setIduserproduct(int iduserproduct) {
+        this.iduserproduct = iduserproduct;
     }
 
     public String getUserEmail() {
@@ -40,20 +53,12 @@ public class UserFavoriteProducts {
         this.productId = productId;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     @Override
     public String toString() {
         return "UserFavoriteProducts{" +
-                "userEmail='" + userEmail + '\'' +
+                "iduserproduct=" + iduserproduct +
+                ", userEmail='" + userEmail + '\'' +
                 ", productId=" + productId +
-                ", users=" + users +
                 '}';
     }
 }

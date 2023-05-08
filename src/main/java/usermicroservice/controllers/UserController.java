@@ -52,7 +52,7 @@ public class UserController {
             return new ResponseEntity<>(userService.findUserByName(name), HttpStatus.OK);
     }
 
-   @PostMapping(path = "/api/users/{email}/favoriteproducts")
+   @PostMapping(path = "/api/favoriteproducts/{email}")
     public ResponseEntity<Set<UserFavoriteProducts>>  favorites (@RequestBody int itemId){
         return new ResponseEntity<>((), HttpStatus.OK);
     }

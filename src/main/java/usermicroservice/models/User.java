@@ -4,13 +4,12 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Builder
@@ -40,11 +39,15 @@ public class User {
     @OneToMany
     private List<Integer> favoriteProducts;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "email")
+    private Set<UserFavoriteProducts> favorites = new LinkedHashSet<>();
+
 
     public User() {
     }
 
-    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage, List<Integer> favoriteProducts) {
+    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage, List<Integer> favoriteProducts, Set<UserFavoriteProducts> favorites) {
         this.email = email;
         this.name = name;
         this.lastName = lastName;
@@ -53,6 +56,7 @@ public class User {
         this.fidelityPoints = fidelityPoints;
         this.purchasePriceAverage = purchasePriceAverage;
         this.favoriteProducts = favoriteProducts;
+        this.favorites = favorites;
     }
 
     public String getEmail() {
@@ -119,6 +123,14 @@ public class User {
         this.favoriteProducts = favoriteProducts;
     }
 
+    public Set<UserFavoriteProducts> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Set<UserFavoriteProducts> favorites) {
+        this.favorites = favorites;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -130,6 +142,7 @@ public class User {
                 ", fidelityPoints=" + fidelityPoints +
                 ", purchasePriceAverage=" + purchasePriceAverage +
                 ", favoriteProducts=" + favoriteProducts +
+                ", favorites=" + favorites +
                 '}';
     }
 }
