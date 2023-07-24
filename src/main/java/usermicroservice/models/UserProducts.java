@@ -7,34 +7,34 @@ import javax.persistence.*;
 
 @Builder
 @Entity
-@Table(name = "usersfavoriteproducts")
-public class UserFavoriteProducts {
+@Table(name = "userproducts")
+public class UserProducts {
 
 
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int iduserproduct;
+    private int idUserProduct;
     @NotNull
     private String userEmail;
     @NotNull
     private int productId;
 
 
-    public UserFavoriteProducts(){}
+    public UserProducts(){}
 
-    public UserFavoriteProducts(int iduserproduct, String userEmail, int productId) {
-        this.iduserproduct = iduserproduct;
+    public UserProducts(int idUserProduct, String userEmail, int productId) {
+        this.idUserProduct = idUserProduct;
         this.userEmail = userEmail;
         this.productId = productId;
     }
 
-    public int getIduserproduct() {
-        return iduserproduct;
+    public int getIdUserProduct() {
+        return idUserProduct;
     }
 
-    public void setIduserproduct(int iduserproduct) {
-        this.iduserproduct = iduserproduct;
+    public void setIdUserProduct(int idUserProduct) {
+        this.idUserProduct = idUserProduct;
     }
 
     public String getUserEmail() {
@@ -56,7 +56,7 @@ public class UserFavoriteProducts {
     @Override
     public String toString() {
         return "UserFavoriteProducts{" +
-                "iduserproduct=" + iduserproduct +
+                "iduserproduct=" + idUserProduct +
                 ", userEmail='" + userEmail + '\'' +
                 ", productId=" + productId +
                 '}';

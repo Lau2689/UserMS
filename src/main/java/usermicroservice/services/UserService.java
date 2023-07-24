@@ -7,6 +7,7 @@ import usermicroservice.models.User;
 import usermicroservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import usermicroservice.validations.EmailValidation;
+import usermicroservice.repositories.UserFavoriteProductsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private UserFavoriteProductsRepository userFavoriteProductsRepository;
 
 
 
@@ -74,8 +76,12 @@ public class UserService {
         }
     }
 
-    public int settingFavoriteProduct (String email, int itemId ){
-        Optional <User> userChoossingItem= userRepository.findById(email);
+   /*public int settingFavoriteProduct (String email, int itemId ){
+        UserFavoriteProducts findingFavoriteById = userFavoriteProductsRepository.findById(itemId).get();
+        User userChoossingItem= userRepository.findById(email).get();
+        userChoossingItem.setFavoriteProducts(itemId);
 
-    }
+
+
+    }*/
 }

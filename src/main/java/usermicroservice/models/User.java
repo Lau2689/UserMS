@@ -7,8 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -36,18 +34,14 @@ public class User {
 
     private Integer fidelityPoints;
     private Double purchasePriceAverage;
-    @OneToMany
-    private List<Integer> favoriteProducts;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "email")
-    private Set<UserFavoriteProducts> favorites = new LinkedHashSet<>();
+    @ManyToMany
+    private Set<UserProducts> favoriteProducts;
 
 
     public User() {
     }
 
-    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage, List<Integer> favoriteProducts, Set<UserFavoriteProducts> favorites) {
+    public User(String email, String name, String lastName, String city, String paymentMethod, Integer fidelityPoints, Double purchasePriceAverage, Set<UserProducts> favoriteProducts) {
         this.email = email;
         this.name = name;
         this.lastName = lastName;
@@ -56,7 +50,6 @@ public class User {
         this.fidelityPoints = fidelityPoints;
         this.purchasePriceAverage = purchasePriceAverage;
         this.favoriteProducts = favoriteProducts;
-        this.favorites = favorites;
     }
 
     public String getEmail() {
@@ -115,20 +108,12 @@ public class User {
         this.purchasePriceAverage = purchasePriceAverage;
     }
 
-    public List<Integer> getFavoriteProducts() {
+    public Set<UserProducts> getFavoriteProducts() {
         return favoriteProducts;
     }
 
-    public void setFavoriteProducts(List<Integer> favoriteProducts) {
+    public void setFavoriteProducts(Set<UserProducts> favoriteProducts) {
         this.favoriteProducts = favoriteProducts;
-    }
-
-    public Set<UserFavoriteProducts> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Set<UserFavoriteProducts> favorites) {
-        this.favorites = favorites;
     }
 
     @Override
@@ -142,7 +127,6 @@ public class User {
                 ", fidelityPoints=" + fidelityPoints +
                 ", purchasePriceAverage=" + purchasePriceAverage +
                 ", favoriteProducts=" + favoriteProducts +
-                ", favorites=" + favorites +
                 '}';
     }
 }

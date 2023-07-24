@@ -1,7 +1,7 @@
 package usermicroservice.controllers;
 import org.springframework.web.bind.annotation.*;
 import usermicroservice.models.User;
-import usermicroservice.models.UserFavoriteProducts;
+import usermicroservice.models.UserProducts;
 import usermicroservice.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +53,7 @@ public class UserController {
     }
 
    @PostMapping(path = "/api/favoriteproducts/{email}")
-    public ResponseEntity<Set<UserFavoriteProducts>>  favorites (@RequestBody int itemId){
+    public ResponseEntity<Set<UserProducts>>  favorites (@RequestBody int itemId){
         return new ResponseEntity<>((), HttpStatus.OK);
     }
 }
