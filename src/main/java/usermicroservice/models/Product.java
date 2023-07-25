@@ -9,7 +9,7 @@ public class Product {
     @Id
     @NotNull
     @NotBlank
-    private int productId;
+    private int itemId;
     @NotNull
     @NotBlank
     private String name;
@@ -28,8 +28,8 @@ public class Product {
 
 
     public Product(){};
-    public Product(int productId, String name, String description, String category, double price, int stock) {
-        this.productId = productId;
+    public Product(int itemId, String name, String description, String category, double price, int stock) {
+        this.itemId = itemId;
         this.name = name;
         this.description = description;
         this.category = category;
@@ -37,12 +37,12 @@ public class Product {
         this.stock = stock;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -88,7 +88,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
+                "productId=" + itemId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", category='" + category + '\'' +

@@ -18,15 +18,15 @@ public class UserProducts {
     @NotNull
     private String userEmail;
     @NotNull
-    private int productId;
+    private int itemId;
 
 
     public UserProducts(){}
 
-    public UserProducts(int idUserProduct, String userEmail, int productId) {
+    public UserProducts(int idUserProduct, String userEmail, int itemId) {
         this.idUserProduct = idUserProduct;
         this.userEmail = userEmail;
-        this.productId = productId;
+        this.itemId = itemId;
     }
 
     public int getIdUserProduct() {
@@ -45,12 +45,12 @@ public class UserProducts {
         this.userEmail = userEmail;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserProducts {
         return "UserFavoriteProducts{" +
                 "iduserproduct=" + idUserProduct +
                 ", userEmail='" + userEmail + '\'' +
-                ", productId=" + productId +
+                ", productId=" + itemId +
                 '}';
     }
 }

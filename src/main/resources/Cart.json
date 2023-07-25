@@ -3,7 +3,7 @@
   [
     {
       "cartId": 1,
-      "userId": 123,
+      "userId": "laura@gmail.com",
       "products":
       [
         {
@@ -21,7 +21,7 @@
     },
     {
       "cartId": 2,
-      "userId": 456,
+      "userId": "maria@gmail.com",
       "products":
       [
         { "itemId": 3,
